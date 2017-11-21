@@ -8,8 +8,8 @@
       bigip_pool:
         server: "{{ inventory_hostname }}"
         server_port: 8443
-        user: "{{ F5_USER }}"
-        password: "{{ F5_PASSWORD }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         state: "present"
         name: "my-pool"
         partition: "Common"
@@ -20,8 +20,8 @@
         server: "{{ inventory_hostname }}"
         server_port: 8443
         name: "node-1"
-        user: "{{ F5_USER }}"
-        password: "{{ F5_PASSWORD }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         validate_certs: "no"
         host: "10.0.0.229"
 
@@ -30,8 +30,8 @@
         server: "{{ inventory_hostname }}"
         server_port: 8443
         name: "node-2"
-        user: "{{ F5_USER }}"
-        password: "{{ F5_PASSWORD }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         validate_certs: "no"
         host: "10.0.0.253"
 
@@ -40,8 +40,8 @@
         server: "{{ inventory_hostname }}"
         server_port: 8443
         name: "node-3"
-        user: "{{ F5_USER }}"
-        password: "{{ F5_PASSWORD }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         validate_certs: "no"
         host: "10.0.0.101"
 
@@ -49,8 +49,8 @@
       bigip_pool_member:
         server: "{{ inventory_hostname }}"
         server_port: 8443
-        user: "{{ F5_USER }}"
-        password: "{{ F5_PASSWORD }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         validate_certs: "no"
         description: "webservers"
         host: "{{ item.host }}"
@@ -69,8 +69,8 @@
       bigip_virtual_server:
         server: "{{ inventory_hostname }}"
         server_port: 8443
-        user: "{{ F5_USER }}"
-        password: "{{ F5_PASSWORD }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         validate_certs: "no"
         description: "my-vs"
         destination: "10.0.0.76"
