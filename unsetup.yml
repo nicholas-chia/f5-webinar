@@ -1,0 +1,20 @@
+- name: Setup Webservers
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Stop httpd service
+      service:
+        name: httpd
+        state: stopped
+
+    - name: Remove index.html on webserver
+      file:
+        name: /var/www/html/index.html
+        state: absent
+
+    - name: Uninstall Apache
+      yum:
+        name: httpd
+        state: absent
+...

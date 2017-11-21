@@ -1,0 +1,82 @@
+---
+- name: Setup BIG-IP
+  hosts: bigip
+  connection: local
+
+  tasks:
+    - name: Create pool
+      bigip_pool:
+        server: "{{ inventory_hostname }}"
+        server_port: 8443
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        state: "present"
+        name: "my-pool"
+        partition: "Common"
+        lb_method: "round_robin"
+
+    - name: Create node1
+      bigip_node:
+        server: "{{ inventory_hostname }}"
+        server_port: 8443
+        name: "node-1"
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        validate_certs: "no"
+        host: "10.0.0.229"
+
+    - name: Create node2
+      bigip_node:
+        server: "{{ inventory_hostname }}"
+        server_port: 8443
+        name: "node-2"
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        validate_certs: "no"
+        host: "10.0.0.253"
+
+    - name: Create node3
+      bigip_node:
+        server: "{{ inventory_hostname }}"
+        server_port: 8443
+        name: "node-3"
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        validate_certs: "no"
+        host: "10.0.0.101"
+
+    - name: Add nodes to pool
+      bigip_pool_member:
+        server: "{{ inventory_hostname }}"
+        server_port: 8443
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        validate_certs: "no"
+        description: "webservers"
+        host: "{{ item.host }}"
+        name: "{{ item.name }}"
+        pool: "my-pool"
+        port: "80"
+      with_items:
+      - host: "10.0.0.229"
+        name: "node-1"
+      - host: "10.0.0.253"
+        name: "node-2"
+      - host: "10.0.0.101"
+        name: "node-3"
+
+    - name: Create a Virtual Server IP
+      bigip_virtual_server:
+        server: "{{ inventory_hostname }}"
+        server_port: 8443
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        validate_certs: "no"
+        description: "my-vs"
+        destination: "10.0.0.76"
+        name: "my-vs"
+        pool: "my-pool"
+        port: "80"
+        snat: "Automap"
+
+...

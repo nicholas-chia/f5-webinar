@@ -1,0 +1,15 @@
+---
+- name: Collect BIG-IP Facts
+  hosts: bigip
+  connection: local
+
+  tasks:
+    - name: Collect BIG-IP facts
+      bigip_facts:
+        server:  "{{ inventory_hostname }}"
+        server_port: 8443
+        user: "{{ bigip_username }}"
+        password: "{{ bigip_password }}"
+        include: "{{ facts_type }}"
+        validate_certs: false
+...

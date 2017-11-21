@@ -1,0 +1,20 @@
+- name: Setup Webservers
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install Apache
+      yum:
+        name: httpd
+        state: latest
+
+    - name: Create index.html on webserver
+      copy:
+        content: "{{ hostvars[inventory_hostname]['ansible_eth0']['ipv4']['address'] }}"
+        dest: /var/www/html/index.html
+  
+    - name: Start httpd service
+      service:
+        name: httpd
+        state: started
+...
