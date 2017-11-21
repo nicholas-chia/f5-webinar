@@ -8,8 +8,8 @@
       bigip_facts:
         server:  "{{ inventory_hostname }}"
         server_port: 8443
-        user: "{{ bigip_username }}"
-        password: "{{ bigip_password }}"
+        user: "{{ ANSIBLE_NET_USERNAME }}"
+        password: "{{ ANSIBLE_NET_PASSWORD }}"
         include: "{{ facts_type }}"
         validate_certs: false
 ...
