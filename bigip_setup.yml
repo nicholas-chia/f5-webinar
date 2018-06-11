@@ -13,7 +13,7 @@
         state: "present"
         name: "my-pool"
         partition: "Common"
-        lb_method: "round_robin"
+        lb_method: "round-robin"
 
     - name: Create node1
       bigip_node:
